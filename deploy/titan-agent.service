@@ -1,0 +1,23 @@
+[Unit]
+Description=Titan: Claude Code do TITANJR, com canal do Telegram
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=forking
+User=titan
+Group=titan
+WorkingDirectory=/opt/titan-agent/titan
+Environment=PATH=/var/lib/titan-agent/.local/bin:/var/lib/titan-agent/.bun/bin:/usr/local/bin:/usr/bin:/bin
+Environment=TERM=xterm-256color
+Environment=SHELL=/bin/bash
+Environment=LANG=C.UTF-8
+# O Claude Code é interativo e precisa de um terminal: roda dentro do tmux.
+# Para entrar na sessão:  sudo -u titan tmux -L titan attach
+ExecStart=/usr/bin/tmux -L titan new-session -d -s titan -x 200 -y 50 /opt/titan-agent/deploy/iniciar-titan.sh
+ExecStop=/usr/bin/tmux -L titan kill-server
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

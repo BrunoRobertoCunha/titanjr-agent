@@ -1,0 +1,5 @@
+# O Titan pode rodar comandos como o usuário bruno (dono dos projetos em ~/lab),
+# sem senha. Isso NÃO dá root: o sudo do bruno continua pedindo senha.
+# A proteção de verdade é que todo comando que altera algo passa por
+# aprovação no Telegram (ver titan/permissoes.py).
+titan ALL=(bruno) NOPASSWD: ALL
